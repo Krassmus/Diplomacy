@@ -4,7 +4,7 @@
         <input type="hidden" name="statusgruppe_id" value="<?= $gruppe->getId() ?>">
         <? $command = $turn->getMyCommand($gruppe->getId()) ?>
         <label>
-            <h2><?= sprintf(_("Befehle von %s in der aktuellen Runde"), htmlReady(DiplomacyGroup::find($gruppe->getId())->name)) ?></h2>
+            <h2><?= sprintf(_("Befehle von %s in der aktuellen Runde"), htmlReady($command['statusgruppe_name'])) ?></h2>
             <textarea name="command" style="width: 100%; height: 200px;"><?= $command ? htmlReady($command['content']) : "" ?></textarea>
         </label>
         <?= Studip\Button::createAccept(_("speichern")) ?>

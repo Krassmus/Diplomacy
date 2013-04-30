@@ -35,6 +35,7 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
             if ($gruppe->amIMember()) {
                 $command = $turn->getMyCommand($gruppe->getId());
                 $command['content'] = Request::get('command');
+                $command['statusgruppe_name'] = $gruppe['name'];
                 $command->store();
             } else {
                 throw new AccessDeniedException("Unerlaubter Zugriff auf Gruppe");
