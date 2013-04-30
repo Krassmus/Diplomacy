@@ -36,7 +36,7 @@
         <tr data-turn_id="<?= $turn->getId() ?>" class="turn">
             <td><?= htmlReady($turn['name']) ?></td>
             <td><?= count($turn->commands) ?></td>
-            <td><?= htmlReady($turn['mkdate']) ?></td>
+            <td><?= date("j.n.Y - G:i", $turn['mkdate']) ?> <?= _("Uhr") ?></td>
         </tr>
         <? endforeach ?>
         <? else : ?>
@@ -45,6 +45,11 @@
         </tr>
         <? endif ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <td><a href="<?= PluginEngine::getLink($plugin, array(), 'edit_turn') ?>"><?= Assets::img("icons/16/blue/add") ?></a></td>
+        </tr>
+    </tfoot>
 </table>
 
 <div id="turn_window"></div>

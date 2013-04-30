@@ -1,3 +1,9 @@
+<h1><?= htmlReady($turn['name']) ?></h1>
+
+<div class="turn_description">
+<?= formatReady($turn['description']) ?>
+</div>
+
 <? if ($turn->isLatestTurn()) : ?>
     <? foreach ($statusgruppen as $gruppe) : ?>
     <form action="?cid=<?= Request::option('cid') ?>" method="post">
@@ -14,7 +20,9 @@
     <? foreach ($turn->commands as $command) : ?>
     <div class="command">
         <h2><?= htmlReady(DiplomacyGroup::find($command['statusgruppe_id'])->name) ?></h2>
-        <?= formatReady($command['content']) ?>
+        <div class="command">
+        <?= htmlReady($command['content']) ?>
+        </div>
     </div>
     <? endforeach ?>
 <? endif; ?>

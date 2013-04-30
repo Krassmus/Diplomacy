@@ -24,6 +24,7 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
     public function overview_action() {
         $template = $this->getTemplate("overview.php");
         $template->set_attribute('turns', DiplomacyTurn::findBySQL("Seminar_id = ? ORDER BY mkdate DESC", array($_SESSION['SessionSeminar'])));
+        $template->set_attribute("plugin", $this);
         echo $template->render();
     }
     
@@ -45,6 +46,25 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
         $template = $this->getTemplate("turn.php");
         $template->set_attribute("turn", $turn);
         $template->set_attribute('statusgruppen', DiplomacyGroup::findMine($turn['Seminar_id']));
+        echo $template->render();
+    }
+    
+    public function edit_turn_action($turn_id = null) {
+        if (!$GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) {
+            throw new AccessDeniedException("Kein Zugriff");
+        }
+        $turn = new DiplomacyTurn($turn_id);
+        Navigation::activateItem("/course/diplomacy");
+        if (Request::isPost() && (!$turn['Seminar_id'] or $turn['Seminar_id'] === $_SESSION['SessionSeminar'])) {
+            $turn['Seminar_id'] = $_SESSION['SessionSeminar'];
+            $turn['name'] = Request::get("name");
+            $turn['description'] = Request::get("description");
+            $turn->store();
+        }
+        
+        $template = $this->getTemplate("edit_turn.php");
+        $template->set_attribute("turn", $turn);
+        $template->set_attribute("plugin", $this);
         echo $template->render();
     }
     
