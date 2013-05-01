@@ -76,7 +76,13 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
     
     public function getIconNavigation($course_id, $last_visit, $user_id = null) {
         $icon_navigation = new Navigation(_("Diplomacy"), PluginEngine::getURL($this, array(), 'overview'));
-        $icon_navigation->setImage($this->getPluginURL()."/assets/grey_star.png");
+        $new_turns = DiplomacyTurn::findBySQL("Seminar_id = ? AND mkdate > ?", array($course_id, $last_visit));
+        if (count($new_turns)) {
+            $icon_navigation->setImage($this->getPluginURL()."/assets/red_star.png", array('title' => _("Neue Runde in Diplomacy!")));
+            $icon_navigation->setTitle(_("Neue Runde in Diplomacy!"));
+        } else {
+            $icon_navigation->setImage($this->getPluginURL()."/assets/grey_star.png", array('title' => _("Diplomacy")));
+        }
         return $icon_navigation;
     }
     
