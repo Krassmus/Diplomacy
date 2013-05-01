@@ -5,6 +5,13 @@
     }
     #diplomacy_turns > thead > tr {
         background-color: #eeeeee;
+        background-image: url('<?= $plugin->getPluginURL()."/assets/images/background_grey.png" ?>');
+        background-repeat: repeat-x;
+    }
+    #diplomacy_turns > thead > tr > td {
+        color: #eeeeee;
+        font-weight: bold;
+        text-shadow: 0px 0px 5px black;
     }
     #diplomacy_turns > tbody > tr > td {
         padding: 7px;
