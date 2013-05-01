@@ -34,7 +34,8 @@
         <? if (count($turns)) : ?>
         <? foreach ($turns as $turn) : ?>
         <tr data-turn_id="<?= $turn->getId() ?>" class="turn">
-            <td><?= htmlReady($turn['name']) ?></td>
+            <td>
+                <a href="<?= PluginEngine::getLink($plugin, array(), "view_turn/".$turn->getId()) ?>"><?= htmlReady($turn['name']) ?></a></td>
             <td><?= count($turn->commands) ?></td>
             <td><?= date("j.n.Y - G:i", $turn['mkdate']) ?> <?= _("Uhr") ?></td>
         </tr>

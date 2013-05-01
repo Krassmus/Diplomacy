@@ -18,6 +18,7 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
         $navigation->setImage($this->getPluginURL()."/assets/white_star.png");
         $navigation->setActiveImage($this->getPluginURL()."/assets/black_star.png");
         $navigation->addSubNavigation("overview", new AutoNavigation(_("Rundenübersicht"), PluginEngine::getURL($this, array(), 'overview')));
+        $navigation->addSubNavigation("rules", new AutoNavigation(_("Regeln"), PluginEngine::getURL($this, array(), 'rules')));
         return array("diplomacy" => $navigation);
     }
     
@@ -67,6 +68,11 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
         $template = $this->getTemplate("edit_turn.php");
         $template->set_attribute("turn", $turn);
         $template->set_attribute("plugin", $this);
+        echo $template->render();
+    }
+    
+    public function rules_action() {
+        $template = $this->getTemplate("regeln.php");
         echo $template->render();
     }
     
