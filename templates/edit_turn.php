@@ -11,5 +11,5 @@ $label = $turn->isNew() ? _("Name der neuen Spielrunde") : _("Name der Spielrund
     <br>
     <textarea name="description" style="width: 100%; height: 150px;"><?= htmlReady($turn['description']) ?></textarea>
     <br>
-    <?= \Studip\Button::createAccept(_("Speichern"))?>
+    <?= \Studip\Button::createAccept(_("Speichern"), array('onclick' => 'jQuery(this).attr("disabled", "disabled");'))?>
 </form>

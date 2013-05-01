@@ -37,7 +37,8 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
                 $command = $turn->getMyCommand($gruppe->getId());
                 $command['content'] = Request::get('command');
                 $command['statusgruppe_name'] = $gruppe['name'];
-                $command->store();
+                $success = $command->store();
+                PageLayout::postMessage(MessageBox::success(_("Befehle wurden gespeichert, können aber bis zum Ende der Runde jederzeit geändert werden.")));
             } else {
                 throw new AccessDeniedException("Unerlaubter Zugriff auf Gruppe");
             }
@@ -46,6 +47,7 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
         $template = $this->getTemplate("turn.php");
         $template->set_attribute("turn", $turn);
         $template->set_attribute('statusgruppen', DiplomacyGroup::findMine($turn['Seminar_id']));
+        $template->set_attribute("plugin", $this);
         echo $template->render();
     }
     
@@ -59,7 +61,7 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
             $turn['Seminar_id'] = $_SESSION['SessionSeminar'];
             $turn['name'] = Request::get("name");
             $turn['description'] = Request::get("description");
-            $turn->store();
+            $success = $turn->store();
         }
         
         $template = $this->getTemplate("edit_turn.php");

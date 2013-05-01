@@ -43,4 +43,13 @@ class DiplomacyGroup extends SimpleORMap {
         ));
         return $statement->fetch(PDO::FETCH_COLUMN, 0);
     }
+    
+    public function getMembers() {
+        $statement = DBManager::get()->prepare(
+            "SELECT user_id FROM statusgruppe_user " .
+            "WHERE statusgruppe_id = :id " .
+        "");
+        $statement->execute(array('id' => $this->getId()));
+        return $statement->fetchAll(PDO::FETCH_COLUMN, 0);
+    }
 }

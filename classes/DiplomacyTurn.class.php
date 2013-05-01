@@ -1,6 +1,8 @@
 <?php
 
 require_once dirname(__file__)."/DiplomacyCommand.class.php";
+require_once dirname(__file__)."/DiplomacyGroup.class.php";
+require_once 'lib/models/PersonalNotifications.class.php';
 
 class DiplomacyTurn extends SimpleORMap {
     
@@ -44,5 +46,25 @@ class DiplomacyTurn extends SimpleORMap {
         "");
         $statement->execute(array('seminar_id' => $this['Seminar_id'], 'mkdate' => $this['mkdate']));
         return $statement->fetch(PDO::FETCH_COLUMN, 0) < 1;
+    }
+    
+    public function store() {
+        $newturn = $this->isNew();
+        $success = parent::store();
+        if ($success && $newturn) {
+            //Benachrichtige alle Spieler
+            $groups = DiplomacyGroup::findBySQL("range_id = ?", array($this['Seminar_id']));
+            $users = array();
+            foreach ($groups as $group) {
+                $users = array_merge($users, $group->getMembers());
+            }
+            PersonalNotifications::add(
+                array_unique($users),
+                URLHelper::getURL("plugins.php/diplomacy/overview", array('cid' => $this['Seminar_id'])), 
+                _("Eine neue Spielrunde wurde gestartet!"), 
+                "diplomacy_turn_".$this->getId(),
+                $GLOBALS['ABSOLUTE_URI_STUDIP']."plugins_packages/RasmusFuhse/Diplomacy/assets/images/new_turn.png"
+            );
+        }
     }
 }
