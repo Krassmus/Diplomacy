@@ -42,6 +42,9 @@
         <? foreach ($turns as $turn) : ?>
         <tr data-turn_id="<?= $turn->getId() ?>" class="turn">
             <td>
+                <? if ($GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) : ?>
+                <a href="<?= PluginEngine::getLink($plugin, array(), "edit_turn/".$turn->getId()) ?>" style="float: right;"><?= Assets::img("icons/16/blue/edit", array('class' => "text-bottom")) ?></a>
+                <? endif ?>
                 <a href="<?= PluginEngine::getLink($plugin, array(), "view_turn/".$turn->getId()) ?>"><?= htmlReady($turn['name']) ?></a></td>
             <td><?= count($turn->commands) ?></td>
             <td><?= date("j.n.Y - G:i", $turn['mkdate']) ?> <?= _("Uhr") ?></td>
