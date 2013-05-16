@@ -23,7 +23,7 @@
     <div class="command">
         <h2><?= htmlReady(DiplomacyGroup::find($command['statusgruppe_id'])->name) ?></h2>
         <div class="command">
-        <?= htmlReady(nl2br($command['content'])) ?>
+        <?= nl2br(htmlReady($command['content'])) ?>
         </div>
     </div>
     <? endforeach ?>
