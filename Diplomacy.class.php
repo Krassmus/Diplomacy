@@ -84,10 +84,10 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
         $icon_navigation = new Navigation(_("Diplomacy"), PluginEngine::getURL($this, array(), 'overview'));
         $new_turns = DiplomacyTurn::findBySQL("Seminar_id = ? AND mkdate > ?", array($course_id, $last_visit));
         if (count($new_turns)) {
-            $icon_navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_red_diplomacy.png" : "/assets/16_red_diplomacy.png"), array('title' => _("Neue Runde in Diplomacy!")));
+            $icon_navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_red_diplomacy.png" : "/assets/16_red_diplomacy.png"), array('title' => _("Neue Runde in Diplomacy!"), 'width' => "16px"));
             $icon_navigation->setTitle(_("Neue Runde in Diplomacy!"));
         } else {
-            $icon_navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_grey_diplomacy.png" : "/assets/16_grey_diplomacy.png"), array('title' => _("Diplomacy")));
+            $icon_navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_grey_diplomacy.png" : "/assets/16_grey_diplomacy.png"), array('title' => _("Diplomacy"), 'width' => "16px"));
         }
         return $icon_navigation;
     }
