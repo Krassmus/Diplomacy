@@ -15,8 +15,8 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
     
     public function getTabNavigation($course_id) {
         $navigation = new Navigation(_("Diplomacy"), PluginEngine::getURL($this, array(), 'overview'));
-        $navigation->setImage($this->getPluginURL()."/assets/white_star.png");
-        $navigation->setActiveImage($this->getPluginURL()."/assets/black_star.png");
+        $navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_white_diplomacy.png" : "/assets/16_white_diplomacy.png"));
+        $navigation->setActiveImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_black_diplomacy.png" : "/assets/16_black_diplomacy.png"));
         $navigation->addSubNavigation("overview", new AutoNavigation(_("Rundenübersicht"), PluginEngine::getURL($this, array(), 'overview')));
         $navigation->addSubNavigation("rules", new AutoNavigation(_("Regeln"), PluginEngine::getURL($this, array(), 'rules')));
         return array("diplomacy" => $navigation);
@@ -84,10 +84,10 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
         $icon_navigation = new Navigation(_("Diplomacy"), PluginEngine::getURL($this, array(), 'overview'));
         $new_turns = DiplomacyTurn::findBySQL("Seminar_id = ? AND mkdate > ?", array($course_id, $last_visit));
         if (count($new_turns)) {
-            $icon_navigation->setImage($this->getPluginURL()."/assets/red_star.png", array('title' => _("Neue Runde in Diplomacy!")));
+            $icon_navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_red_diplomacy.png" : "/assets/16_red_diplomacy.png"), array('title' => _("Neue Runde in Diplomacy!")));
             $icon_navigation->setTitle(_("Neue Runde in Diplomacy!"));
         } else {
-            $icon_navigation->setImage($this->getPluginURL()."/assets/grey_star.png", array('title' => _("Diplomacy")));
+            $icon_navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_grey_diplomacy.png" : "/assets/16_grey_diplomacy.png"), array('title' => _("Diplomacy")));
         }
         return $icon_navigation;
     }
