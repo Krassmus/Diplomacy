@@ -58,7 +58,13 @@
     </tbody>
     <tfoot>
         <tr>
-            <td><a href="<?= PluginEngine::getLink($plugin, array(), 'edit_turn') ?>"><?= Assets::img("icons/16/blue/add") ?></a></td>
+            <td>
+                <? if ($GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) : ?>
+                <a href="<?= PluginEngine::getLink($plugin, array(), 'edit_turn') ?>" title="<?= _("Neue Runde starten") ?>">
+                    <?= Assets::img("icons/16/blue/add") ?>
+                </a>
+                <? endif ?>
+            </td>
         </tr>
     </tfoot>
 </table>
