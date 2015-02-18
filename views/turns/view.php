@@ -1,11 +1,13 @@
 <h1><?= htmlReady($turn['name']) ?></h1>
+<? if ($turn['document_id']) : ?>
+    <img src="<?= GetDownloadLink($turn['document_id'], "Map.jpg") ?>" width="100%" style="display: block;">
+<? endif ?>
 
 <div class="turn_description">
 <?= formatReady($turn['description']) ?>
 </div>
 
 <? if ($turn->isLatestTurn()) : ?>
-    <? $info = count($statusgruppen) ? _("Geben Sie Ihre Befehle für die aktuelle Runde an.") : _("Dies ist die aktuelle Runde. Die Befehle werden erst einsehbar, wenn sie vorbei ist.") ?>
     <? foreach ($statusgruppen as $gruppe) : ?>
     <form action="?cid=<?= Request::option('cid') ?>" method="post">
         <input type="hidden" name="statusgruppe_id" value="<?= $gruppe->getId() ?>">
@@ -18,7 +20,6 @@
     </form>
     <? endforeach ?>
 <? else : ?>
-    <? $info = _("Es war eine sehr gute Runde.") ?>
     <? foreach ($turn->commands as $command) : ?>
     <div class="command">
         <h2><?= htmlReady(DiplomacyGroup::find($command['statusgruppe_id'])->name) ?></h2>
@@ -32,8 +33,11 @@
 <?
 $selector = new SelectorWidget();
 $selector->setTitle(_("Zughistorie"));
+$selector->setUrl(PluginEngine::getURL($plugin, array(), "turns/view"));
+$selector->setSelectParameterName("turn_id");
 foreach ($turns as $t) {
-    $selector->addElement(new SelectElement($t->getId(), $t['name'], $t->getId() === $turn->getId()));
+    $selector->addElement(new SelectElement($t->getId(), $t['name']));
 }
+$selector->setSelection($turn->getId());
 
 Sidebar::Get()->addWidget($selector);

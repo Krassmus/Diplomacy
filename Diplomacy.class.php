@@ -14,61 +14,12 @@ require_once dirname(__file__)."/classes/DiplomacyGroup.class.php";
 class Diplomacy extends StudIPPlugin implements StandardPlugin {
     
     public function getTabNavigation($course_id) {
-        $navigation = new Navigation(_("Diplomacy"), PluginEngine::getURL($this, array(), 'overview'));
-        $navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_white_diplomacy.png" : "/assets/16_white_diplomacy.png"));
-        $navigation->setActiveImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_black_diplomacy.png" : "/assets/16_black_diplomacy.png"));
-        $navigation->addSubNavigation("overview", new AutoNavigation(_("Rundenübersicht"), PluginEngine::getURL($this, array(), 'overview')));
+        $navigation = new Navigation(_("Diplomacy"), PluginEngine::getURL($this, array(), 'turns/overview'));
+        $navigation->setImage($this->getPluginURL()."/assets/diplomacy_white.svg");
+        $navigation->setActiveImage($this->getPluginURL()."/assets/diplomacy_black.svg");
+        $navigation->addSubNavigation("overview", new AutoNavigation(_("Rundenübersicht"), PluginEngine::getURL($this, array(), 'turns/overview')));
         $navigation->addSubNavigation("rules", new AutoNavigation(_("Regeln"), PluginEngine::getURL($this, array(), 'rules')));
         return array("diplomacy" => $navigation);
-    }
-    
-    public function overview_action() {
-        $template = $this->getTemplate("overview.php");
-        $template->set_attribute('turns', DiplomacyTurn::findBySQL("Seminar_id = ? ORDER BY mkdate DESC", array($_SESSION['SessionSeminar'])));
-        $template->set_attribute("plugin", $this);
-        echo $template->render();
-    }
-    
-    public function view_turn_action($turn_id) {
-        $turn = new DiplomacyTurn($turn_id);
-        Navigation::activateItem("/course/diplomacy");
-        if (Request::get('command') && Request::isPost() && $turn->isLatestTurn()) {
-            $gruppe = new DiplomacyGroup(Request::option("statusgruppe_id"));
-            if ($gruppe->amIMember()) {
-                $command = $turn->getMyCommand($gruppe->getId());
-                $command['content'] = Request::get('command');
-                $command['statusgruppe_name'] = $gruppe['name'];
-                $success = $command->store();
-                PageLayout::postMessage(MessageBox::success(_("Befehle wurden gespeichert, können aber bis zum Ende der Runde jederzeit geändert werden.")));
-            } else {
-                throw new AccessDeniedException("Unerlaubter Zugriff auf Gruppe");
-            }
-        }
-        
-        $template = $this->getTemplate("turn.php");
-        $template->set_attribute("turn", $turn);
-        $template->set_attribute('statusgruppen', DiplomacyGroup::findMine($turn['Seminar_id']));
-        $template->set_attribute("plugin", $this);
-        echo $template->render();
-    }
-    
-    public function edit_turn_action($turn_id = null) {
-        if (!$GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) {
-            throw new AccessDeniedException("Kein Zugriff");
-        }
-        $turn = new DiplomacyTurn($turn_id);
-        Navigation::activateItem("/course/diplomacy");
-        if (Request::isPost() && (!$turn['Seminar_id'] or $turn['Seminar_id'] === $_SESSION['SessionSeminar'])) {
-            $turn['Seminar_id'] = $_SESSION['SessionSeminar'];
-            $turn['name'] = Request::get("name");
-            $turn['description'] = Request::get("description");
-            $success = $turn->store();
-        }
-        
-        $template = $this->getTemplate("edit_turn.php");
-        $template->set_attribute("turn", $turn);
-        $template->set_attribute("plugin", $this);
-        echo $template->render();
     }
     
     public function rules_action() {
@@ -81,13 +32,13 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
     }
     
     public function getIconNavigation($course_id, $last_visit, $user_id = null) {
-        $icon_navigation = new Navigation(_("Diplomacy"), PluginEngine::getURL($this, array(), 'overview'));
+        $icon_navigation = new Navigation(_("Diplomacy"), PluginEngine::getURL($this, array(), 'turns/overview'));
         $new_turns = DiplomacyTurn::findBySQL("Seminar_id = ? AND mkdate > ?", array($course_id, $last_visit));
         if (count($new_turns)) {
-            $icon_navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_red_diplomacy.png" : "/assets/16_red_diplomacy.png"), array('title' => _("Neue Runde in Diplomacy!"), 'width' => "16px"));
+            $icon_navigation->setImage($this->getPluginURL()."/assets/diplomacy_red.svg", array('title' => _("Neue Runde in Diplomacy!"), 'width' => "16px"));
             $icon_navigation->setTitle(_("Neue Runde in Diplomacy!"));
         } else {
-            $icon_navigation->setImage($this->getPluginURL().($GLOBALS['auth']->auth['devicePixelRatio'] > 1.2 ? "/assets/32_grey_diplomacy.png" : "/assets/16_grey_diplomacy.png"), array('title' => _("Diplomacy"), 'width' => "16px"));
+            $icon_navigation->setImage($this->getPluginURL()."/assets/diplomacy_grey.svg", array('title' => _("Diplomacy"), 'width' => "16px"));
         }
         return $icon_navigation;
     }

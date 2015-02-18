@@ -16,6 +16,7 @@ class InitPlugin extends DBMigration
                 `turn_id` varchar(32) NOT NULL,
                 `Seminar_id` varchar(32) NOT NULL,
                 `name` varchar(64) DEFAULT NULL,
+                `document_id` varchar(32) NULL,
                 `description` text DEFAULT NULL,
                 `chdate` bigint(20) NOT NULL,
                 `mkdate` bigint(20) NOT NULL,

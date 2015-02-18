@@ -60,8 +60,8 @@ class DiplomacyTurn extends SimpleORMap {
             }
             PersonalNotifications::add(
                 array_unique($users),
-                URLHelper::getURL("plugins.php/diplomacy/overview", array('cid' => $this['Seminar_id'])), 
-                _("Eine neue Spielrunde wurde gestartet!"), 
+                URLHelper::getURL("plugins.php/diplomacy/turns/overview", array('cid' => $this['Seminar_id'])),
+                _("Eine neue Spielrunde wurde gestartet!"),
                 "diplomacy_turn_".$this->getId(),
                 $GLOBALS['ABSOLUTE_URI_STUDIP']."plugins_packages/RasmusFuhse/Diplomacy/assets/images/new_turn.png"
             );
