@@ -8,10 +8,13 @@
             'slide': function (event, ui) {
                 jQuery("#maps >li:visible:not(#version_" + ui.value + ")").hide();
                 jQuery("#map_" + ui.value).show();
+                jQuery("#map_name").text(jQuery("#map_" + ui.value).data("name"));
             }
         });
     });
 </script>
+
+<h1 id="map_name"></h1>
 
 <ul class="clean" id="maps">
     <? foreach ($turns as $key => $turn) : ?>
