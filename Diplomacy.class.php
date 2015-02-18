@@ -18,6 +18,7 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
         $navigation->setImage($this->getPluginURL()."/assets/diplomacy_white.svg");
         $navigation->setActiveImage($this->getPluginURL()."/assets/diplomacy_black.svg");
         $navigation->addSubNavigation("overview", new AutoNavigation(_("Rundenübersicht"), PluginEngine::getURL($this, array(), 'turns/overview')));
+        $navigation->addSubNavigation("timeline", new AutoNavigation(_("Historie"), PluginEngine::getURL($this, array(), 'turns/timeline')));
         $navigation->addSubNavigation("rules", new AutoNavigation(_("Regeln"), PluginEngine::getURL($this, array(), 'rules')));
         return array("diplomacy" => $navigation);
     }

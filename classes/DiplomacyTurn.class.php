@@ -15,6 +15,13 @@ class DiplomacyTurn extends SimpleORMap {
                 'foreign_key' => 'Seminar_id'
             ),
         );
+        $this->has_one = array(
+            'map' => array(
+                'class_name' => 'StudipDocument',
+                'foreign_key' => 'document_id',
+                'assoc_foreign_key' => 'dokument_id'
+            ),
+        );
         $this->has_many = array(
             'commands' => array(
                 'class_name' => 'DiplomacyCommand',

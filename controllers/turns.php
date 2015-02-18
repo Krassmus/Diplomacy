@@ -84,4 +84,8 @@ class TurnsController extends PluginController {
         }
 
     }
+
+    public function timeline_action() {
+        $this->turns = DiplomacyTurn::findBySQL("Seminar_id = ? ORDER BY mkdate DESC", array($_SESSION['SessionSeminar']));
+    }
 }
