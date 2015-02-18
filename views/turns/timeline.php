@@ -16,7 +16,8 @@
 <ul class="clean" id="maps">
     <? foreach ($turns as $key => $turn) : ?>
         <li id="map_<?= count($turns) - $key ?>"
-            data-name="<?= htmlReady($turn['name']) ?>">
+            data-name="<?= htmlReady($turn['name']) ?>"
+            style="<?= $key > 0 ? "display:none; " : "" ?>">
             <img src="<?= GetDownloadLink($turn->map->getId(), $turn->map['filename']) ?>" style="width: 100%; display: block;">
         </li>
     <? endforeach ?>
