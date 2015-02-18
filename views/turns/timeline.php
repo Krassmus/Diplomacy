@@ -14,7 +14,7 @@
     });
 </script>
 
-<h1 id="map_name"><?= htmlReady($turns[0]['name']) ?></h1>
+<h1 id="map_name" style="text-align: center;"><?= htmlReady($turns[0]['name']) ?></h1>
 
 <ul class="clean" id="maps">
     <? foreach ($turns as $key => $turn) : ?>
