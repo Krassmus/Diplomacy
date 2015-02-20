@@ -37,6 +37,8 @@
 <? endif; ?>
 
 <?
+Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");
+
 $selector = new SelectorWidget();
 $selector->setTitle(_("Zughistorie"));
 $selector->setUrl(PluginEngine::getURL($plugin, array(), "turns/view"));

@@ -30,3 +30,6 @@ $label = $turn->isNew() ? _("Name der neuen Spielrunde") : _("Name der Spielrund
         <?= \Studip\Button::createAccept(_("Speichern"), array('onclick' => 'window.setTimeout(function () { jQuery(this).attr("disabled", "disabled"); }, 10);'))?>
     </div>
 </form>
+
+<?
+Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");

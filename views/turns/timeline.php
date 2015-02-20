@@ -25,3 +25,6 @@
         </li>
     <? endforeach ?>
 </ul>
+
+<?
+Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");

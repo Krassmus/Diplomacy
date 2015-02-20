@@ -79,3 +79,6 @@ jQuery("#diplomacy_turns tr.turn").live("click", function () {
     });
 });
 </script>
+
+<?
+Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");

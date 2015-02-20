@@ -60,3 +60,6 @@
 <p class="info" style="font-style: italic;">
 <?= _("Diese Regeln sind nicht die Originalregeln von Diplomacy, sondern in langen Jahren entstandene Hausregeln. Jedem steht es frei, eigene Hausregeln oder gar die Originalregeln der verschiedenen Editionen von Diplomacy zu verwenden. Je nach gespielter Karte (ja, es gibt im Internet viele weitere Karten anstatt des ersten Weltkriegs) können sich die Regeln eh unterscheiden. Falls Sie also eigene Regeln verwenden wollen, können Sie im Wiki eine Seite anlegen mit dem Namen DiplomacyRegeln, und diese Regeln werden anstatt dieser hier dargestellt.") ?>
 </p>
+
+<?
+Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");

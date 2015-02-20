@@ -25,6 +25,7 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
     
     public function rules_action() {
         $template = $this->getTemplate("regeln.php");
+        $template->set_attribute("plugin", $this);
         echo $template->render();
     }
     
