@@ -15,8 +15,9 @@
 
 <? if ($turn->isLatestTurn()) : ?>
     <? foreach ($statusgruppen as $gruppe) : ?>
-    <form action="?cid=<?= Request::option('cid') ?>" method="post">
+    <form action="<?= URLHelper::getLink("?") ?>" method="post">
         <input type="hidden" name="statusgruppe_id" value="<?= $gruppe->getId() ?>">
+        <input type="hidden" name="turn_id" value="<?= $turn->getId() ?>">
         <? $command = $turn->getMyCommand($gruppe->getId()) ?>
         <label>
             <h2><?= sprintf(_("Befehle von %s in der aktuellen Runde"), htmlReady($command['statusgruppe_name'])) ?></h2>
