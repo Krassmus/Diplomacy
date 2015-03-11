@@ -1,65 +1,42 @@
-<h1><?= _("Diplomacy-Regeln") ?></h1>
+<h1><?= _("Diplomacy") ?></h1>
 
-<ul class="rules">
-    <li>
-        <?= _("Jede Einheit (Flotte oder Armee) bekommt pro Runde nur einen Befehl, der von der Struktur her ein Angriffsbefehl, ein Haltebefehl, eine Unterstützung bei den erstgenannten Befehlen einer anderen Einheit oder (bei Flotten) ein Convoy-Befehl, um eine Armee über mehrere Felder in einem Zug zu geleiten. Jeder Befehl wird klar und unzweideutig aufgeschrieben. Ist der Befehl zweideutig, kann er nicht vom General der betreffenden Einheit befolgt werden und die Einheit hält stattdessen (und kann dabei theoretisch sogar unterstützt werden).") ?>
-    </li>
-    <li>
-        <?= _("Alle Befehle aller Spieler werden gleichzeitig aufgedeckt und gleichzeitig behandelt. Niemand schreibt, wenn schon die Befehle vorgelesen werden und niemand liest seine Befehle vor, wenn noch jemand mehr Zeit braucht. Jeder bekommt so viel Zeit, wie er möchte, um seine Befehle sauber ausformulieren zu können.") ?>
-    </li>
-    <li>
-        <?= _("Der Unterstützungsbefehl kann nur in Kraft treten, wenn die unterstützende Einheit benachbart zum Ort des Geschehens ist UND wenn die unterstützende Einheit nicht gerade angegriffen wird (ganz egal, ob der Angriff klappt oder nicht). Angegriffene Einheiten, die unterstützen wollten, halten stattdessen auf jeden Fall (, und können auch dabei unterstützt werden).") ?>
-    </li>
-    <li>
-        <?= _("Pro Land kann nur eine Einheit stehen. Wollen zwei Einheiten in ein Land, so kommt nur die Einheit mit der meisten Unterstützung hinein. Haben beide Einheiten eine gleichstarke Unterstützung, kommt keine rein und das Land gilt als umkämpft. Stand schon vorher eine Einheit in dem Land, so muss sie daraus verschwinden, wenn sie nicht mindestens so viel Unterstützung beim Halten hat, wie die Eindringlinge beim Angriff.") ?>
-    </li>
-    <li>
-        <?= _("Eine „convoyende“ Flotte kann ihren Convoy solange durchführen, wie sie nicht vertrieben wird. Eine Flotte, die angegriffen wird, sich aber (eventuell auch mit Unterstützung) halten kann, kann weiterhin den Convoy durchführen.") ?>
-    </li>
-    <li>
-        <?= _("Die Armee, die convoyt wird, kann von sich aus nur einen Angriff der Stärke 0 durchführen – das ist schwächer als ein normaler Angriff, kann also nur in freie und unumkämpfte Gebiete geschehen. Allerdings kann die Armee von weiteren Armeen und Schiffen (die nicht schon den Convoy machen) beim Angriff unterstützt werden, so dass der Angriff Stärke 1 (normale Kampfstärke) oder noch höher bekommt.") ?>
-    </li>
-    <li>
-        <?= _("Wird eine Einheit per Angriff aus ihrem Land vertrieben, muss sie sich in ein benachbartes Land zurückziehen, das sie auch normal betreten könnte. Sie kann dabei nicht unterstützt werden und ihre Bewegung ist schwächer als ein fremder Angriff und sogar schwächer als eine Armee, die ohne Unterstützung convoyt wird. Allein eine Flotte, die sich auf keine Wasser- oder Küstenregion zurückziehen kann, kann sich in eine Armee umwandeln und über Land fliehen. Diese Umwandlung kann nur durch Vertreibung geschehen und nicht rückgängig gemacht werden. Eine Armee kann sich in einem vergleichbaren Fall auch nie in eine Flotte umwandeln.") ?>
-    </li>
-    <li>
-        <?= _("Nach jeder Herbstrunde (es gibt nur Frühjahrs- und Herbstrunden) wird die Anzahl der Einheiten jedes Landes an seine Stützpunktzahl angeglichen. Müssen Einheiten aufgelöst werden, kann sich der betroffene Spieler aussuchen, welche das sein sollen. Ein Aufbau von neuen Einheiten geschieht immer in unbesetzten eigenen Heimatstützpunkten, die man immer noch kontrolliert.") ?>
-    </li>
-</ul>
+<p>
+    <?= _("Diplomacy ist ein altehrwürdiges Spiel. Auf den ersten Blick erinnert es viele an Risiko nur auf einer Europakarte. Tatsächlich sind Risiko und Diplomacy fast zeitgleich unabhängig voneinander entstanden. Wohingegen Risiko aber fast ein reines Glücksspiel ist, verzichtet Diplomacy komplett auf den Faktor Glück. Würfel, Karten, das alles gibt es hier nicht. Stattdessen agieren alle Spieler zeitgleich, schreiben Befehle auf und decken sie gleichzeitig auf. Die Schwierigkeit besteht für die Spieler darin, zu wissen, was die anderen Spieler für Befehle aufschreiben. Dazu muss man kommunizieren bzw. Diplomatie betreiben.") ?>
+</p>
 
-<h2><?= _("Beispielbefehle") ?></h2>
+<h2><?= _("Regelfundus") ?></h2>
+<p>
+    <?= _("Zu Diplomacy gibt es mehrere Karten und mehrere Regelvarianten. Es ist absolut wichtig, dass Sie sich vor Beginn des Spiels auf eine Karte und einen Regelsatz einigen. Dazu werden hier einige Regeln verlinkt, aus denen Sie sich die sinnigste aussuchen können.") ?>
+</p>
 
-<table class="default content">
+<table class="default nohover">
     <tbody>
         <tr>
-            <td>
-                F Pet (sc) – BOT<br>
-                A Swe – Pet<br>
-                F Nor C [A Swe – Pet]<br>
-                A Den – Swe
-            </td>
-            <td>
-                A Tri - Ven<br>
-                F ADR S [A Tri – Ven]<br>
-                A Ven – Tri<br>
-                F IOS – ADR
-            </td>
-            <td>
-                A Ruh – Bel<br>
-                A Mun – Bur<br>
-                F Hol S [A Ruh – Bel]<br>
-                A Bel xxx<br>
-                A Bur S [A Bel xxx]
-            </td>
+            <td><?= _("Offizielle Standardregeln") ?></td>
+            <td><a href="http://en.wikibooks.org/wiki/Diplomacy/Rules">http://en.wikibooks.org/wiki/Diplomacy/Rules</a></td>
+        </tr>
+        <tr>
+            <td><?= _("Standardkarte") ?></td>
+            <td><img src="<?= $plugin->getPluginURL() ?>/assets/images/map.png" width="100%"></td>
+        </tr>
+        <tr>
+            <td><?= _("Variante: Glücklicher Verteidiger") ?></td>
+            <td><?= _("Nach dieser Zusatzregel ist ein Verteidiger durchaus in der Lage, sich gegen zwei Angreifer zu behaupten, wenn er den Supporter der beiden angreift. Dadurch fällt der Supportbefehl und der Angriff ist nicht mehr unterstützt. Greift der Verteidiger hingegen die angreifende Einheit an, bleibt der Supportbefehl stehen und der Verteidiger verliert. Man könnte also sagen, der Verteidiger braucht Glück, um sich verteidigen zu können. - Oder genaues Wissen über die Angriffspläne seines Feindes.") ?></td>
+        </tr>
+        <tr>
+            <td><?= _("Variante: Schwacher Convoy") ?></td>
+            <td><?= _("Nach dieser Regel fällt ein Convoy-Befehl nicht erst, wenn die Flotte vertrieben wird, sondern schon bei einem einzelnen Angriff. In dem Fall wird der Convoy-Befehl analog zum Supportbefehl in einen Haltebefehl umgewandelt, der dann auch wiederum supportet werden kann. Die Armee, die convoyt werden sollte, kommt nicht voran. Der schwache Convoy wird oft kombiniert mit der Variante, dass Flotten an Küstengebieten auch convoyen können (aber nur in Gebiete, in die die Flotte auch angreifen könnte). Das bietet ein sehr interessantes Stellungsspiel durch flexible Rochaden.") ?></td>
+        </tr>
+        <tr>
+            <td><?= _("Variante: Eilmarschbefehl") ?></td>
+            <td><?= _("Diese Regel ist besonders geeignet für große Karten. Nach Standardregeln ist es so, dass eine Armee eineinhalb Jahre auf der Reise ist von Griechenland bis nach Wien. Wenn das Gebiet aber nicht feindlich ist, ist das eine absurd lange Zeit. Man kann einer Einheit auch einen Eilmarsch-Befehl geben, der wie folgt aufgeschrieben werden würde: A Gre E Ser - Tri - Vie. Diese Armee hat absolut keine Angriffstärke in der Runde, in der sie sich auf Eilmarsch befindet. Zudem muss jedes Gebiet der Reise absolut frei, unumkämpft und darf kein feindlicher Stützpunk sein, ansonsten kommt die Einheit auf dem letzten freien Gebiet der Reise zum Stehen. Auch zwei sich kreuzende Eilmärsche sind auf diese Weise unmöglich. Beide Eilmärsche würden zum Stillstand kommen. Einheiten auf dem Eilmarsch können nicht unterstützt werden. Flotten können auch auf dem Eilmarsch sein. Ein Eilmarsch kann maximal fünf Gebiete umfassen. Der Sinn dieser Regel ist, dass ein Land schneller in der Lage sein soll, seine Westfront nach Osten zu verlegen. Dadurch erhofft man sich, dass Spieler schneller die Seiten wechseln, wozu sie zuvor logistisch nicht in der Lage waren.") ?></td>
+        </tr>
+        <tr>
+            <td><?= _("Variante: Chaos-Aufbau") ?></td>
+            <td><?= _("Eine sehr naheliegende Variante ist es, den Spielern zu ermöglichen, neue Einheiten auf allen eigenen und freien Stützpunkten aufzubauen. Dadurch kann man Angriffskriege sehr viel flexibler gestalten. Es kann aber auch passieren, dass man sein Heimatland verliert, trotzdem aber noch aufbaufähig bleibt. Auch diese Regel ist wie der Eilmarsch-Befehl auf großen Karten beliebt und wichtig.") ?></td>
         </tr>
     </tbody>
 </table>
-
-<h2><?= _("Anmerkungen") ?></h2>
-
-<p class="info" style="font-style: italic;">
-<?= _("Diese Regeln sind nicht die Originalregeln von Diplomacy, sondern in langen Jahren entstandene Hausregeln. Jedem steht es frei, eigene Hausregeln oder gar die Originalregeln der verschiedenen Editionen von Diplomacy zu verwenden. Je nach gespielter Karte (ja, es gibt im Internet viele weitere Karten anstatt des ersten Weltkriegs) können sich die Regeln eh unterscheiden. Falls Sie also eigene Regeln verwenden wollen, können Sie im Wiki eine Seite anlegen mit dem Namen DiplomacyRegeln, und diese Regeln werden anstatt dieser hier dargestellt.") ?>
-</p>
 
 <?
 Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");
