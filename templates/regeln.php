@@ -13,7 +13,7 @@
     <tbody>
         <tr>
             <td><?= _("Offizielle Standardregeln") ?></td>
-            <td><a href="http://en.wikibooks.org/wiki/Diplomacy/Rules">http://en.wikibooks.org/wiki/Diplomacy/Rules</a></td>
+            <td><a href="http://en.wikibooks.org/wiki/Diplomacy/Rules" target="_blank">http://en.wikibooks.org/wiki/Diplomacy/Rules</a></td>
         </tr>
         <tr>
             <td><?= _("Standardkarte") ?></td>
