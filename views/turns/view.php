@@ -28,7 +28,7 @@
     <? endforeach ?>
 <? else : ?>
     <? foreach ($turn->commands as $command) : ?>
-    <div class="command">
+    <div>
         <h2><?= htmlReady(DiplomacyGroup::find($command['statusgruppe_id'])->name) ?></h2>
         <div class="command">
         <?= nl2br(htmlReady($command['content'])) ?>
@@ -36,6 +36,12 @@
     </div>
     <? endforeach ?>
 <? endif; ?>
+
+<style>
+    .selection {
+        background-color: yellow;
+    }
+</style>
 
 <?
 Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");
