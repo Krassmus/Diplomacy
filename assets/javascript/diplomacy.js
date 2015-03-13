@@ -14,19 +14,20 @@ jQuery(function () {
         jQuery(element).data("html", jQuery(element).html());
     });
     jQuery(".command").on("mouseup", function () {
-        var selection = window.getSelection();
-        var html = jQuery(this).data("html");
-        if (selection.anchorNode.data) {
-            var start = selection.anchorOffset <= selection.focusOffset ? selection.anchorOffset : selection.focusOffset;
-            var end = selection.anchorOffset > selection.focusOffset ? selection.anchorOffset : selection.focusOffset;
-            var selectedText = selection.anchorNode.data.substr(start, end - start);
-            if (selectedText.length > 0) {
-                var regexp = new RegExp(selectedText, "ig");
-                html = html.replace(regexp, '<span class="selection">' + selectedText + '</span>');
-            }
-        }
-        if (jQuery(this).html() !== html) {
-            jQuery(this).html(html);
+        var selectedText = window.getSelection().toString();
+        if (selectedText.length > 0) {
+            var regexp = new RegExp(selectedText, "ig");
+            jQuery(".command").each(function (index, node) {
+                var html = jQuery(node).data("html");
+                var html = html.replace(regexp, '<span class="selection">' + selectedText + '</span>');
+                if (jQuery(node).html() !== html) {
+                    jQuery(node).html(html);
+                }
+            });
+        } else {
+            jQuery(".command").each(function (index, node) {
+                jQuery(node).html(jQuery(node).data("html"));
+            });
         }
     });
 
