@@ -9,6 +9,7 @@ class TurnsController extends PluginController {
     {
         parent::before_filter($action, $args);
         Navigation::activateItem("/course/diplomacy");
+        PageLayout::addScript($this->plugin->getPluginURL()."/assets/javascript/diplomacy.js");
     }
 
     public function overview_action() {
@@ -81,7 +82,7 @@ class TurnsController extends PluginController {
                 $this->turn->store();
             }
             PageLayout::postMessage(MessageBox::success(_("Zug wurde gespeichert.")));
-            $this->redirect("diplomacy/turns/overview");
+            $this->redirect("turns/overview");
         }
 
     }
