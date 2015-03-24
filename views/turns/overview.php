@@ -82,3 +82,11 @@ jQuery("#diplomacy_turns tr.turn").live("click", function () {
 
 <?
 Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");
+
+$actions = new ActionsWidget();
+if (false && count($nations) === 0) {
+    $actions->addLink(_("Nationen erstellen und zuweisen"), PluginEngine::getURL($plugin, array(), 'nations/create'), null, array('data-dialog' => "1"));
+} else {
+    $actions->addLink(_("Nationen verwalten"), URLHelper::getURL('admin_statusgruppe.php'));
+}
+Sidebar::Get()->addWidget($actions);

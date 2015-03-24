@@ -20,6 +20,10 @@
             <td><img src="<?= $plugin->getPluginURL() ?>/assets/images/map.png" width="100%"></td>
         </tr>
         <tr>
+            <td><?= _("Katalog von nichtstandard Karten") ?></td>
+            <td><a href="http://diplom.org/Online/variants.html" target="_blank">http://diplom.org/Online/variants.html</a></td>
+        </tr>
+        <tr>
             <td><?= _("Variante: Glücklicher Verteidiger") ?></td>
             <td><?= _("Nach dieser Zusatzregel ist ein Verteidiger durchaus in der Lage, sich gegen zwei Angreifer zu behaupten, wenn er den Supporter der beiden angreift. Dadurch fällt der Supportbefehl und der Angriff ist nicht mehr unterstützt. Greift der Verteidiger hingegen die angreifende Einheit an, bleibt der Supportbefehl stehen und der Verteidiger verliert. Man könnte also sagen, der Verteidiger braucht Glück, um sich verteidigen zu können. - Oder genaues Wissen über die Angriffspläne seines Feindes.") ?></td>
         </tr>

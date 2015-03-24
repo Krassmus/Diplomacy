@@ -13,6 +13,7 @@ class TurnsController extends PluginController {
 
     public function overview_action() {
         $this->turns = DiplomacyTurn::findBySQL("Seminar_id = ? ORDER BY mkdate DESC", array($_SESSION['SessionSeminar']));
+        $this->nations = Statusgruppen::findBySQL("range_id = ? ORDER BY position ASC", array($_SESSION['SessionSeminar']));
     }
 
     public function view_action($turn_id = null) {

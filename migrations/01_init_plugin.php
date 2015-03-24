@@ -8,7 +8,7 @@
  *  the License, or (at your option) any later version.
  */
 
-class InitPlugin extends DBMigration
+class InitPlugin extends Migration
 {
     function up() {
         DBManager::get()->exec("
