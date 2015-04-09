@@ -74,4 +74,35 @@ class DiplomacyTurn extends SimpleORMap {
             );
         }
     }
+
+    public function areAllPlayersDone()
+    {
+        $commands = $this->numberOfDonePlayers();
+        $players = $this->numberOfActivePlayers();
+        return $commands >= $players;
+    }
+
+    public function numberOfActivePlayers()
+    {
+        $statement = DBManager::get()->prepare("
+                SELECT COUNT(DISTINCT statusgruppen.statusgruppe_id)
+                FROM statusgruppen
+                    INNER JOIN statusgruppe_user ON (statusgruppen.statusgruppe_id = statusgruppe_user.statusgruppe_id)
+                WHERE statusgruppen.range_id = :seminar_id
+            ");
+        $statement->execute(array('seminar_id' => $this['seminar_id']));
+        return $statement->fetch(PDO::FETCH_COLUMN, 0);
+    }
+
+    public function numberOfDonePlayers()
+    {
+        $statement = DBManager::get()->prepare("
+                SELECT COUNT(*)
+                FROM diplomacycommands
+                WHERE turn_id = :turn_id
+                    AND iamdone = '1'
+            ");
+        $statement->execute(array('turn_id' => $this->getId()));
+        return $statement->fetch(PDO::FETCH_COLUMN, 0);
+    }
 }

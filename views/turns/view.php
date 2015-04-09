@@ -26,10 +26,12 @@
 
         <? $futureturn = DiplomacyFutureTurn::findOneBySQL("seminar_id = ? ORDER BY start_time ASC", array($_SESSION['SessionSeminar'])); ?>
         <? if ($futureturn && $futureturn['whenitsdone']) : ?>
-            <label>
-                <input type="checkbox" name="iamdone" value="1"<?= $command['iamdone'] ? " checked" : "" ?>>
-                <?= _("Ich bin fertig und einverstanden, und der Rundenwechsel kann meinetwegen jederzeit stattfinden.") ?>
-            </label>
+            <div>
+                <label>
+                    <input type="checkbox" name="iamdone" value="1"<?= $command['iamdone'] ? " checked" : "" ?>>
+                    <?= _("Ich bin fertig, und der Rundenwechsel kann meinetwegen jederzeit stattfinden.") ?>
+                </label>
+            </div>
         <? endif ?>
 
         <?= Studip\Button::createAccept(_("Speichern")) ?>

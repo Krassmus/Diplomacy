@@ -44,44 +44,5 @@ class AutomaticTurnJob extends CronJob
             $turn->store();
             $scheduled_turn->delete();
         }
-
-        $seminar_ids = DBManager::get()->prepare("
-            SELECT DISTINCT seminar_id
-            FROM diplomacyfutureturns
-            WHERE whenitsdone = '1'
-        ");
-        $seminar_ids->execute();
-        $seminar_ids = $seminar_ids->fetchAll(PDO::FETCH_COLUMN, 0);
-        foreach ($seminar_ids as $seminar_id) {
-            $oldturn = DiplomacyTurn::findOneBySQL("seminar_id = ? ORDER BY mkdate DESC LIMIT 1", array($seminar_id));
-
-            $statement = DBManager::get()->prepare("
-                SELECT COUNT(*)
-                FROM diplomacycommands
-                WHERE turn_id = :turn_id
-            ");
-            $statement->execute(array('turn_id' => $oldturn->getId()));
-            $commands = $statement->fetch(PDO::FETCH_COLUMN, 0);
-
-            $statement = DBManager::get()->prepare("
-                SELECT COUNT(*)
-                FROM statusgruppe
-                    INNER JOIN statusgruppe_user ON (statusgruppe.statusgruppe_id = statusgruppe_user.statusgruppe_id)
-                WHERE range_id = :seminar_id
-            ");
-            $statement->execute(array('seminar_id' => $seminar_id));
-            $players = $statement->fetch(PDO::FETCH_COLUMN, 0);
-
-            if ($commands >= $players) {
-                $futureturn = DiplomacyFutureTurn::findOneBySQL("seminar_id = ? ORDER BY start_time ASC", array($seminar_id));
-                if ($turn['whenitsdone']) {
-                    $turn = DiplomacyTurn();
-                    $turn->setData($futureturn->toArray());
-                    $turn['mkdate'] = $turn['chdate'] = time();
-                    $turn->store();
-                    $futureturn->delete();
-                }
-            }
-        }
     }
 }

@@ -39,14 +39,36 @@
     </thead>
     <tbody>
         <? if (count($turns)) : ?>
-        <? foreach ($turns as $turn) : ?>
+        <? foreach ($turns as $key => $turn) : ?>
+        <? if ($key === 0) {
+            $futureturn = DiplomacyFutureTurn::findOneBySQL("seminar_id = ? ORDER BY start_time DESC LIMIT 1", array($_SESSION['SessionSeminar']));
+        } else {
+            $futureturn = null;
+        } ?>
         <tr data-turn_id="<?= $turn->getId() ?>" class="turn">
             <td>
                 <? if ($GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) : ?>
-                <a href="<?= PluginEngine::getLink($plugin, array(), "turns/edit/".$turn->getId()) ?>" style="float: right;"><?= Assets::img("icons/16/blue/edit", array('class' => "text-bottom")) ?></a>
+                <a href="<?= PluginEngine::getLink($plugin, array(), "turns/edit/".$turn->getId()) ?>" style="float: right;">
+                    <?= Assets::img("icons/16/blue/edit", array('class' => "text-bottom")) ?>
+                </a>
                 <? endif ?>
-                <a href="<?= PluginEngine::getLink($plugin, array(), "turns/view/".$turn->getId()) ?>"><?= htmlReady($turn['name']) ?></a></td>
-            <td><?= count($turn->commands) ?></td>
+                <a href="<?= PluginEngine::getLink($plugin, array(), "turns/view/".$turn->getId()) ?>">
+                    <?= htmlReady($turn['name']) ?>
+                </a>
+                <? if ($futureturn) : ?>
+                    <div style="font-size: 0.8em;">
+                        <?= sprintf(_("Endet automatisch am %s um %s Uhr."), date("d:m:Y", $futureturn['start_time']), date("H:i", $futureturn['start_time'])) ?>
+                    </div>
+                <? endif ?>
+            </td>
+            <td>
+                <?= count($turn->commands) ?>
+                <? if ($futureturn && $futureturn['whenitsdone']) : ?>
+                    <div style="font-size: 0.8em;">
+                        <?= sprintf(_("%s von %s Spieler sind fertig."), $turn->numberOfDonePlayers(), $turn->numberOfActivePlayers()) ?>
+                    </div>
+                <? endif ?>
+            </td>
             <td><?= date("j.n.Y - G:i", $turn['mkdate']) ?> <?= _("Uhr") ?></td>
         </tr>
         <? endforeach ?>

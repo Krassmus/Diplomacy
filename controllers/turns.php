@@ -31,7 +31,23 @@ class TurnsController extends PluginController {
                 $command['iamdone'] = Request::int('iamdone');
                 $command['statusgruppe_name'] = $gruppe['name'];
                 $success = $command->store();
-                PageLayout::postMessage(MessageBox::success(_("Befehle wurden gespeichert, können aber bis zum Ende der Runde jederzeit geändert werden.")));
+
+                if ($command['iamdone']) {
+                    $futureturn = DiplomacyFutureTurn::findOneBySQL("seminar_id = ? ORDER BY start_time ASC", array($_SESSION['SessionSeminar']));
+                    if ($futureturn
+                            && $futureturn['whenitsdone']
+                            && $this->turn->areAllPlayersDone()) {
+                        $turn = new DiplomacyTurn();
+                        $turn->setData($futureturn->toArray());
+                        $turn['mkdate'] = $turn['chdate'] = time();
+                        $turn->store();
+                        $futureturn->delete();
+                        PageLayout::postMessage(MessageBox::success(_("Befehle wurden gespeichert. Eine neue Runde hat begonnen.")));
+                        $this->redirect("turns/overview");
+                    }
+                } else {
+                    PageLayout::postMessage(MessageBox::success(_("Befehle wurden gespeichert, können aber bis zum Ende der Runde jederzeit geändert werden.")));
+                }
             } else {
                 throw new AccessDeniedException("Unerlaubter Zugriff auf Gruppe");
             }
