@@ -10,7 +10,7 @@ $label = $turn->isNew() ? _("Name der neuen Spielrunde") : _("Name der Spielrund
            aria-label="<?= $label ?>">
     <br>
 
-    <div style="margin: 10px; text-align: center">
+    <div style="padding: 10px; text-align: center">
         <label style="cursor: pointer;">
             <input type="file" name="map" style="display: none;">
             <?= Assets::img("icons/16/blue/upload", array('class' => "text-bottom")) ?>
@@ -26,6 +26,29 @@ $label = $turn->isNew() ? _("Name der neuen Spielrunde") : _("Name der Spielrund
     </div>
 
     <textarea name="description" style="width: 100%; height: 150px;"><?= htmlReady($turn['description']) ?></textarea>
+
+    <? if ($turn->isNew()) : ?>
+        <div>
+        <label for="start_date">
+            <?= _("Optional: Runde soll noch nicht sofort starten, sondern erst ...") ?>
+        </label>
+        </div>
+        <input type="date" name="start_date" id="start_date" onChange="if (this.value) { jQuery('#whenitsdone').show('fade'); } else { jQuery('#whenitsdone').hide('fade'); }">
+        <input type="text" name="start_time" value="12:00">
+        <script>
+            jQuery(function () {
+                jQuery("#start_date").datepicker();
+            });
+        </script>
+
+        <div>
+            <label style="display: none;" id="whenitsdone">
+                <input type="checkbox" name="whenitsdone" value="1" checked>
+                <?= _("Runde fängt automatisch früher an, wenn alle Spieler bestätigen, dass sie fertig sind.") ?>
+            </label>
+        </div>
+    <? endif ?>
+
     <div style="text-align: center">
         <?= \Studip\Button::createAccept(_("Speichern"), array('onclick' => 'window.setTimeout(function () { jQuery(this).attr("disabled", "disabled"); }, 10);'))?>
     </div>

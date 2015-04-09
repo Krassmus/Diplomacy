@@ -9,6 +9,7 @@
  */
 
 require_once dirname(__file__)."/classes/DiplomacyTurn.class.php";
+require_once dirname(__file__)."/classes/DiplomacyFutureTurn.class.php";
 require_once dirname(__file__)."/classes/DiplomacyGroup.class.php";
 
 class Diplomacy extends StudIPPlugin implements StandardPlugin {
@@ -18,6 +19,10 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
         $navigation->setImage($this->getPluginURL()."/assets/diplomacy_white.svg");
         $navigation->setActiveImage($this->getPluginURL()."/assets/diplomacy_black.svg");
         $navigation->addSubNavigation("overview", new AutoNavigation(_("Rundenübersicht"), PluginEngine::getURL($this, array(), 'turns/overview')));
+        if ($GLOBALS['perm']->have_studip_perm("tutor", $course_id)
+                && DiplomacyFutureTurn::countBySQL("seminar_id = ?", array($course_id)) > 0) {
+            $navigation->addSubNavigation("overview", new AutoNavigation(_("Geplante Rundenwechsel"), PluginEngine::getURL($this, array(), 'turns/scheduled')));
+        }
         $navigation->addSubNavigation("timeline", new AutoNavigation(_("Historie"), PluginEngine::getURL($this, array(), 'turns/timeline')));
         $navigation->addSubNavigation("rules", new AutoNavigation(_("Regel-Vorschläge"), PluginEngine::getURL($this, array(), 'rules')));
         return array("diplomacy" => $navigation);

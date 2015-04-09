@@ -28,6 +28,7 @@ class TurnsController extends PluginController {
             if ($gruppe->amIMember()) {
                 $command = $this->turn->getMyCommand($gruppe->getId());
                 $command['content'] = Request::get('command');
+                $command['iamdone'] = Request::int('iamdone');
                 $command['statusgruppe_name'] = $gruppe['name'];
                 $success = $command->store();
                 PageLayout::postMessage(MessageBox::success(_("Befehle wurden gespeichert, können aber bis zum Ende der Runde jederzeit geändert werden.")));
@@ -47,6 +48,18 @@ class TurnsController extends PluginController {
         $this->turn = new DiplomacyTurn($turn_id);
         Navigation::activateItem("/course/diplomacy");
         if (Request::isPost() && (!$this->turn['Seminar_id'] or $this->turn['Seminar_id'] === $_SESSION['SessionSeminar'])) {
+            if ($this->turn->isNew() && Request::get("start_date")) {
+                $this->turn = new DiplomacyFutureTurn();
+                $this->turn['Seminar_id'] = $_SESSION['SessionSeminar'];
+                $this->turn['name'] = Request::get("name");
+                $this->turn['description'] = Request::get("description");
+                $this->turn['start_date'] = strtotime(Request::get("start_date") ." ". Request::get("start_time"));
+                $this->turn['whenitsdone'] = Request::int("whenitsdone");
+                $this->turn->store();
+                PageLayout::postMessage(MessageBox::success(_("Neuer Rundenwechsel wurde eingeplant. Der Rundenwechsel wird automatisch vollzogen, sobald die Zeit gekommen ist.")));
+                $this->redirect("turns/overview");
+                return;
+            }
             $this->turn['Seminar_id'] = $_SESSION['SessionSeminar'];
             $this->turn['name'] = Request::get("name");
             $this->turn['description'] = Request::get("description");
@@ -89,5 +102,12 @@ class TurnsController extends PluginController {
 
     public function timeline_action() {
         $this->turns = DiplomacyTurn::findBySQL("Seminar_id = ? AND document_id IS NOT NULL ORDER BY mkdate DESC", array($_SESSION['SessionSeminar']));
+    }
+
+    public function scheduled_action() {
+        if (!$GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) {
+            throw new AccessDeniedException("Kein Zugriff");
+        }
+        $this->turns = DiplomacyFutureTurn::findBySQL("Seminar_id = ? ORDER BY mkdate DESC", array($_SESSION['SessionSeminar']));
     }
 }
