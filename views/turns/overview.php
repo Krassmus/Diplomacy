@@ -57,7 +57,7 @@
                 </a>
                 <? if ($futureturn) : ?>
                     <div style="font-size: 0.8em;">
-                        <?= sprintf(_("Endet automatisch am %s um %s Uhr."), date("d:m:Y", $futureturn['start_time']), date("H:i", $futureturn['start_time'])) ?>
+                        <?= sprintf(_("Endet automatisch am %s um %s Uhr."), date("d.m.Y", $futureturn['start_time']), date("H:i", $futureturn['start_time'])) ?>
                     </div>
                 <? endif ?>
             </td>

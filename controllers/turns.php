@@ -13,6 +13,20 @@ class TurnsController extends PluginController {
     }
 
     public function overview_action() {
+        //instead of a cronjob:
+        $scheduled_turn = DiplomacyFutureTurn::findOneBySQL("
+            start_time <= UNIX_TIMESTAMP()
+                AND seminar_id = ?
+            ORDER BY start_time ASC
+            LIMIT 1", array($_SESSION['SessionSeminar']));
+        if ($scheduled_turn) {
+            $turn = new DiplomacyTurn();
+            $turn->setData($scheduled_turn->toArray());
+            $turn['mkdate'] = $turn['chdate'] = time();
+            $turn->store();
+            $scheduled_turn->delete();
+        }
+
         $this->turns = DiplomacyTurn::findBySQL("Seminar_id = ? ORDER BY mkdate DESC", array($_SESSION['SessionSeminar']));
         $this->nations = Statusgruppen::findBySQL("range_id = ? ORDER BY position ASC", array($_SESSION['SessionSeminar']));
     }
@@ -31,6 +45,7 @@ class TurnsController extends PluginController {
                 $command['iamdone'] = Request::int('iamdone');
                 $command['statusgruppe_name'] = $gruppe['name'];
                 $success = $command->store();
+                $turnaround = false;
 
                 if ($command['iamdone']) {
                     $futureturn = DiplomacyFutureTurn::findOneBySQL("seminar_id = ? ORDER BY start_time ASC", array($_SESSION['SessionSeminar']));
@@ -43,9 +58,11 @@ class TurnsController extends PluginController {
                         $turn->store();
                         $futureturn->delete();
                         PageLayout::postMessage(MessageBox::success(_("Befehle wurden gespeichert. Eine neue Runde hat begonnen.")));
+                        $turnaround = true;
                         $this->redirect("turns/overview");
                     }
-                } else {
+                }
+                if (!$turnaround) {
                     PageLayout::postMessage(MessageBox::success(_("Befehle wurden gespeichert, können aber bis zum Ende der Runde jederzeit geändert werden.")));
                 }
             } else {
