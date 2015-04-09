@@ -54,7 +54,7 @@ class TurnsController extends PluginController {
                 $this->turn['name'] = Request::get("name");
                 $this->turn['description'] = Request::get("description");
                 $this->turn['start_time'] = strtotime(Request::get("start_date") ." ". Request::get("start_time"));
-                $this->turn['whenitsdone'] = Request::int("whenitsdone");
+                $this->turn['whenitsdone'] = Request::int("whenitsdone", 0);
                 $this->turn->store();
                 PageLayout::postMessage(MessageBox::success(_("Neuer Rundenwechsel wurde eingeplant. Der Rundenwechsel wird automatisch vollzogen, sobald die Zeit gekommen ist.")));
                 $this->redirect("turns/overview");
@@ -109,5 +109,37 @@ class TurnsController extends PluginController {
             throw new AccessDeniedException("Kein Zugriff");
         }
         $this->turns = DiplomacyFutureTurn::findBySQL("Seminar_id = ? ORDER BY start_time DESC", array($_SESSION['SessionSeminar']));
+    }
+
+    public function editfuture_action($turn_id)
+    {
+        if (!$GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) {
+            throw new AccessDeniedException("Kein Zugriff");
+        }
+        $this->turn = new DiplomacyFutureTurn($turn_id);
+        Navigation::activateItem("/course/diplomacy/scheduled");
+        if (Request::isPost() && (!$this->turn['Seminar_id'] or $this->turn['Seminar_id'] === $_SESSION['SessionSeminar'])) {
+            $this->turn['Seminar_id'] = $_SESSION['SessionSeminar'];
+            $this->turn['name'] = Request::get("name");
+            $this->turn['description'] = Request::get("description");
+            $this->turn['start_time'] = strtotime(Request::get("start_date") ." ". Request::get("start_time"));
+            $this->turn['whenitsdone'] = Request::int("whenitsdone", 0);
+            $success = $this->turn->store();
+
+            PageLayout::postMessage(MessageBox::success(_("Geplanter Rundenwechsel wurde gespeichert.")));
+            $this->redirect("turns/scheduled");
+        }
+
+    }
+
+    public function deletefuture_action($turn_id)
+    {
+        if (!$GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) {
+            throw new AccessDeniedException("Kein Zugriff");
+        }
+        $this->turn = new DiplomacyFutureTurn($turn_id);
+        $this->turn->delete();
+        PageLayout::postMessage(MessageBox::success(_("Geplanter Rundenwechsel verworfen.")));
+        $this->redirect("turns/scheduled");
     }
 }
