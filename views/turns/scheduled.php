@@ -1,8 +1,11 @@
 <table class="default future_turns">
+    <caption>
+        <?= _("Geplante Rundenwechsel") ?>
+    </caption>
     <thead>
         <tr>
-            <td><?= _("Runde") ?></td>
-            <td><?= _("Startzeit") ?></td>
+            <th><?= _("Runde") ?></th>
+            <th><?= _("Startzeit") ?></th>
         </tr>
     </thead>
     <tbody>
@@ -10,7 +13,7 @@
         <? foreach ($turns as $turn) : ?>
         <tr data-turn_id="<?= $turn->getId() ?>" class="turn">
             <td>
-                <a href="<?= PluginEngine::getLink($plugin, array(), "turns/editfuture/".$turn->getId()) ?>" style="float: right;">
+                <a href="<?= PluginEngine::getLink($plugin, array(), "turns/editfuture/".$turn->getId()) ?>">
                     <?= Assets::img("icons/16/blue/edit", array('class' => "text-bottom")) ?>
                     <?= htmlReady($turn['name']) ?>
                 </a>
@@ -26,7 +29,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td>
+            <td colspan="2">
                 <? if ($GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) : ?>
                 <a href="<?= PluginEngine::getLink($plugin, array(), 'turns/edit') ?>" title="<?= _("Neue Runde starten") ?>">
                     <?= Assets::img("icons/16/blue/add") ?>

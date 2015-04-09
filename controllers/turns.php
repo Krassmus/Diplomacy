@@ -53,7 +53,7 @@ class TurnsController extends PluginController {
                 $this->turn['Seminar_id'] = $_SESSION['SessionSeminar'];
                 $this->turn['name'] = Request::get("name");
                 $this->turn['description'] = Request::get("description");
-                $this->turn['start_date'] = strtotime(Request::get("start_date") ." ". Request::get("start_time"));
+                $this->turn['start_time'] = strtotime(Request::get("start_date") ." ". Request::get("start_time"));
                 $this->turn['whenitsdone'] = Request::int("whenitsdone");
                 $this->turn->store();
                 PageLayout::postMessage(MessageBox::success(_("Neuer Rundenwechsel wurde eingeplant. Der Rundenwechsel wird automatisch vollzogen, sobald die Zeit gekommen ist.")));
@@ -108,6 +108,6 @@ class TurnsController extends PluginController {
         if (!$GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) {
             throw new AccessDeniedException("Kein Zugriff");
         }
-        $this->turns = DiplomacyFutureTurn::findBySQL("Seminar_id = ? ORDER BY mkdate DESC", array($_SESSION['SessionSeminar']));
+        $this->turns = DiplomacyFutureTurn::findBySQL("Seminar_id = ? ORDER BY start_time DESC", array($_SESSION['SessionSeminar']));
     }
 }

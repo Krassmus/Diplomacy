@@ -21,7 +21,7 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
         $navigation->addSubNavigation("overview", new AutoNavigation(_("Rundenübersicht"), PluginEngine::getURL($this, array(), 'turns/overview')));
         if ($GLOBALS['perm']->have_studip_perm("tutor", $course_id)
                 && DiplomacyFutureTurn::countBySQL("seminar_id = ?", array($course_id)) > 0) {
-            $navigation->addSubNavigation("overview", new AutoNavigation(_("Geplante Rundenwechsel"), PluginEngine::getURL($this, array(), 'turns/scheduled')));
+            $navigation->addSubNavigation("scheduled", new AutoNavigation(_("Geplante Rundenwechsel"), PluginEngine::getURL($this, array(), 'turns/scheduled')));
         }
         $navigation->addSubNavigation("timeline", new AutoNavigation(_("Historie"), PluginEngine::getURL($this, array(), 'turns/timeline')));
         $navigation->addSubNavigation("rules", new AutoNavigation(_("Regel-Vorschläge"), PluginEngine::getURL($this, array(), 'rules')));
