@@ -28,7 +28,7 @@ $label = _("Name der Spielrunde");
     <div>
         <label id="whenitsdone">
             <input type="checkbox" name="whenitsdone" value="1"<?= $turn['whenitsdone'] ? " checked" : "" ?>>
-            <?= _("Runde fängt automatisch früher an, wenn alle Spieler bestätigen, dass sie fertig sind.") ?>
+            <?= _("Runde fÃ¤ngt automatisch frÃ¼her an, wenn alle Spieler bestÃ¤tigen, dass sie fertig sind.") ?>
         </label>
     </div>
 

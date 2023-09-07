@@ -5,33 +5,27 @@ require_once dirname(__file__)."/DiplomacyGroup.class.php";
 require_once 'lib/models/PersonalNotifications.class.php';
 
 class DiplomacyTurn extends SimpleORMap {
-    
-    public function __construct($id = null)
+
+    static protected function configure($config = array())
     {
-        $this->db_table = "diplomacyturns";
-        $this->belongs_to = array(
-            'course' => array(
-                'class_name' => 'Course',
-                'foreign_key' => 'Seminar_id'
-            ),
+        $config['db_table'] = 'diplomacyturns';
+        $config['belongs_to']['course'] = array(
+            'class_name' => 'Course',
+            'foreign_key' => 'Seminar_id'
         );
-        $this->has_one = array(
-            'map' => array(
-                'class_name' => 'StudipDocument',
-                'foreign_key' => 'document_id',
-                'assoc_foreign_key' => 'dokument_id'
-            ),
+        $config['has_one']['map'] = array(
+            'class_name' => FileRef::class,
+            'foreign_key' => 'document_id',
+            'assoc_foreign_key' => 'id'
         );
-        $this->has_many = array(
-            'commands' => array(
-                'class_name' => 'DiplomacyCommand',
-                'on_delete' => 'delete',
-                'on_store' => 'store'
-            )
+        $config['has_many']['commands'] = array(
+            'class_name' => 'DiplomacyCommand',
+            'on_delete' => 'delete',
+            'on_store' => 'store'
         );
-        parent::__construct($id);
+        parent::configure($config);
     }
-    
+
     public function getMyCommand($statusgruppe_id) {
         $commands = DiplomacyCommand::findBySQL("turn_id = ? AND statusgruppe_id = ?", array($this->getId(), $statusgruppe_id));
         if (!$commands) {
@@ -43,7 +37,7 @@ class DiplomacyTurn extends SimpleORMap {
             return $commands[0];
         }
     }
-    
+
     public function isLatestTurn() {
         $statement = DBManager::get()->prepare(
             "SELECT COUNT(*) " .
@@ -54,7 +48,7 @@ class DiplomacyTurn extends SimpleORMap {
         $statement->execute(array('seminar_id' => $this['Seminar_id'], 'mkdate' => $this['mkdate']));
         return $statement->fetch(PDO::FETCH_COLUMN, 0) < 1;
     }
-    
+
     public function store() {
         $newturn = $this->isNew();
         $success = parent::store();

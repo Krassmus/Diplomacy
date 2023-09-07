@@ -21,10 +21,8 @@
         <li id="map_<?= count($turns) - $key ?>"
             data-name="<?= htmlReady($turn['name']) ?>"
             style="<?= $key > 0 ? "display:none; " : "" ?>">
-            <img src="<?= GetDownloadLink($turn->map->getId(), $turn->map['filename']) ?>" style="width: 100%; display: block;">
+            <img src="<?= htmlReady($turn->map->download_url) ?>" style="width: 100%; display: block;">
         </li>
     <? endforeach ?>
 </ul>
 
-<?
-Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");

@@ -15,7 +15,7 @@ class AddCronjobForAutomaticTurns extends Migration
                 `mkdate` bigint(20) NOT NULL,
                 PRIMARY KEY (`turn_id`),
                 KEY `Seminar_id` (`Seminar_id`)
-            ) ENGINE=MyISAM;
+            );
         ");
 
         DBManager::get()->exec("
@@ -61,10 +61,10 @@ class AddCronjobForAutomaticTurns extends Migration
             ':minute'      => $new_job['minute'],
         ));
     }
-    
+
     function down() {
         DBManager::get()->exec("DROP TABLE IF EXISTS `diplomacyfutureturns` ");
     }
-    
-    
+
+
 }

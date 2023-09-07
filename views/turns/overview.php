@@ -41,15 +41,15 @@
         <? if (count($turns)) : ?>
         <? foreach ($turns as $key => $turn) : ?>
         <? if ($key === 0) {
-            $futureturn = DiplomacyFutureTurn::findOneBySQL("seminar_id = ? ORDER BY start_time DESC LIMIT 1", array($_SESSION['SessionSeminar']));
+            $futureturn = DiplomacyFutureTurn::findOneBySQL("seminar_id = ? ORDER BY start_time DESC LIMIT 1", array(Context::get()->id));
         } else {
             $futureturn = null;
         } ?>
         <tr data-turn_id="<?= $turn->getId() ?>" class="turn">
             <td>
-                <? if ($GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) : ?>
-                <a href="<?= PluginEngine::getLink($plugin, array(), "turns/edit/".$turn->getId()) ?>" style="float: right;">
-                    <?= Assets::img("icons/16/blue/edit", array('class' => "text-bottom")) ?>
+                <? if ($GLOBALS['perm']->have_studip_perm("tutor", Context::get()->id)) : ?>
+                <a href="<?= PluginEngine::getLink($plugin, array(), "turns/edit/".$turn->getId()) ?>" style="float: right;" data-dialog>
+                    <?= Icon::create("edit", Icon::ROLE_CLICKABLE)->asImg(20, array('class' => "text-bottom")) ?>
                 </a>
                 <? endif ?>
                 <a href="<?= PluginEngine::getLink($plugin, array(), "turns/view/".$turn->getId()) ?>">
@@ -78,17 +78,6 @@
         </tr>
         <? endif ?>
     </tbody>
-    <tfoot>
-        <tr>
-            <td>
-                <? if ($GLOBALS['perm']->have_studip_perm("tutor", $_SESSION['SessionSeminar'])) : ?>
-                <a href="<?= PluginEngine::getLink($plugin, array(), 'turns/edit') ?>" title="<?= _("Neue Runde starten") ?>">
-                    <?= Assets::img("icons/16/blue/add") ?>
-                </a>
-                <? endif ?>
-            </td>
-        </tr>
-    </tfoot>
 </table>
 
 <div id="turn_window"></div>
@@ -101,14 +90,19 @@ jQuery("#diplomacy_turns tr.turn").live("click", function () {
     });
 });
 </script>
-
 <?
-Sidebar::Get()->setImage($plugin->getPluginURL()."/assets/diplomacy-sidebar.png");
-
 $actions = new ActionsWidget();
-if (false && count($nations) === 0) {
-    $actions->addLink(_("Nationen erstellen und zuweisen"), PluginEngine::getURL($plugin, array(), 'nations/create'), null, array('data-dialog' => "1"));
-} else {
-    $actions->addLink(_("Nationen verwalten"), URLHelper::getURL('admin_statusgruppe.php'));
+if ($GLOBALS['perm']->have_studip_perm("tutor", Context::getId())) {
+    $actions->addLink(
+        _("Neue Runde starten"),
+        PluginEngine::getURL($plugin, array(), 'turns/edit'),
+        Icon::create('add', Icon::ROLE_CLICKABLE),
+        ['data-dialog' => 1]
+    );
+    $actions->addLink(
+        _("Nationen verwalten"),
+        URLHelper::getURL('dispatch.php/course/statusgroups'),
+        Icon::create('admin', Icon::ROLE_CLICKABLE)
+    );
 }
 Sidebar::Get()->addWidget($actions);

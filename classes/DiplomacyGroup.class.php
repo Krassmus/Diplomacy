@@ -1,7 +1,13 @@
 <?php
 
 class DiplomacyGroup extends SimpleORMap {
-    
+
+    static protected function configure($config = array())
+    {
+        $config['db_table'] = 'statusgruppen';
+        parent::configure($config);
+    }
+
     static public function findMine($seminar_id, $user_id = null) {
         $user_id or $user_id = $GLOBALS['user']->id;
         $statement = DBManager::get()->prepare(
@@ -23,12 +29,7 @@ class DiplomacyGroup extends SimpleORMap {
         }
         return $groups;
     }
-    
-    public function __construct($id = null) {
-        $this->db_table = "statusgruppen";
-        parent::__construct($id);
-    }
-    
+
     public function amIMember($user_id = null) {
         $user_id or $user_id = $GLOBALS['user']->id;
         $statement = DBManager::get()->prepare(
@@ -43,7 +44,7 @@ class DiplomacyGroup extends SimpleORMap {
         ));
         return $statement->fetch(PDO::FETCH_COLUMN, 0);
     }
-    
+
     public function getMembers() {
         $statement = DBManager::get()->prepare(
             "SELECT user_id FROM statusgruppe_user " .

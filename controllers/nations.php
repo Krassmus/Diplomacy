@@ -1,8 +1,7 @@
 <?php
 
-require_once 'app/controllers/plugin_controller.php';
-
-class NationsController extends PluginController {
+class NationsController extends PluginController
+{
 
     function before_filter(&$action, &$args)
     {
@@ -10,7 +9,8 @@ class NationsController extends PluginController {
         Navigation::activateItem("/course/diplomacy");
     }
 
-    public function create_action() {
+    public function create_action()
+    {
 
     }
 }

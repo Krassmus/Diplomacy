@@ -15,7 +15,7 @@ class AutomaticTurnJob extends CronJob
      */
     public static function getDescription()
     {
-        return _('Sofern der Leiter eines Diplomacy-Zuges das eingestellt hat, führt dieser Job automatisch einen neuen Rundenwechsel durch.');
+        return _('Sofern der Leiter eines Diplomacy-Zuges das eingestellt hat, fÃ¼hrt dieser Job automatisch einen neuen Rundenwechsel durch.');
     }
 
     public function setUp() {

@@ -1,16 +1,14 @@
 <?php
 
-class DiplomacyFutureTurn extends SimpleORMap {
-    
-    public function __construct($id = null)
+class DiplomacyFutureTurn extends SimpleORMap
+{
+    static protected function configure($config = array())
     {
-        $this->db_table = "diplomacyfutureturns";
-        $this->belongs_to = array(
-            'course' => array(
-                'class_name' => 'Course',
-                'foreign_key' => 'Seminar_id'
-            ),
+        $config['db_table'] = 'diplomacyfutureturns';
+        $config['belongs_to']['course'] = array(
+            'class_name' => 'Course',
+            'foreign_key' => 'Seminar_id'
         );
-        parent::__construct($id);
+        parent::configure($config);
     }
 }
