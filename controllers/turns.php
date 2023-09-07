@@ -103,27 +103,43 @@ class TurnsController extends PluginController
             $success = $this->turn->store();
             if (count($_FILES)) {
                 $folder_id = md5("DIPLOMACY_MAP_FOLDER_".Context::get()->id);
-                $folder = new DocumentFolder($folder_id);
-                if ($folder->isNew()) {
-                    $folder['name'] = "Diplomacy Karten";
+                $folder = Folder::find($folder_id);
+                if (!$folder) {
+                    $folder = new Folder();
+                    $folder->setId($folder_id);
+                    $folder['user_id'] = User::findCurrent()->id;
+                    $topfolder = Folder::findTopFolder(Context::get()->id);
+                    $folder['parent_id'] = $topfolder->id;
                     $folder['range_id'] = Context::get()->id;
-                    $folder['seminar_id'] = Context::get()->id;
-                    $folder['user_id'] = $GLOBALS['user']->id;
-                    $folder['permission'] = 7;
+                    $folder['range_type'] = Context::get()->getRangeType();
+                    $folder['folder_type'] = 'StandardFolder';
+                    $folder['name'] = "Diplomacy Karten";
                     $folder->store();
                 }
-                validate_upload($_FILES['map']);
-                //upload($_FILES['map'], true, $folder_id);
-                $document = array();
-                $document['name'] = $document['filename'] = strtolower($_FILES['map']['name']);
-                $document['user_id'] = $GLOBALS['user']->id;
-                $document['author_name'] = get_fullname();
-                $document['seminar_id'] = Context::get()->id;
-                $document['range_id'] = $folder_id;
-                $document['filesize'] = $_FILES['map']['size'];
-                $newfile = StudipDocument::createWithFile($_FILES['map']['tmp_name'], $document);
-                if ($newfile) {
-                    $this->turn['document_id'] = $newfile->getId();
+                $folder = $folder->getTypedFolder();
+
+                foreach ($_FILES as $file) {
+                    $standardfile = StandardFile::create($file);
+                    $error = $folder->validateUpload($standardfile, $GLOBALS['user']->id);
+                    if ($error != null) {
+                        continue;
+                    }
+                    if ($standardfile->getSize()) {
+                        $standardfile = $folder->addFile($standardfile);
+
+                        if (!$standardfile instanceof FileType) {
+                            $error_message = _('Die hochgeladene Datei kann nicht verarbeitet werden!');
+
+                            if ($standardfile instanceof MessageBox) {
+                                $error_message .= ' ' . $standardfile->message;
+                            }
+                            PageLayout::postError($error_message);
+                        }
+                    }
+                }
+
+                if ($standardfile) {
+                    $this->turn['document_id'] = $standardfile->getId();
                     $this->turn->store();
                 }
             }

@@ -32,7 +32,7 @@ $label = $turn->isNew() ? _("Name der neuen Spielrunde") : _("Name der Spielrund
         <textarea name="description"><?= htmlReady($turn['description']) ?></textarea>
     </label>
 
-    <? if ($turn->isNew()) : ?>
+    <? if ($turn->isNew() || $turn->isLatestTurn()) : ?>
         <label>
             <?= _("Optional: Runde soll noch nicht sofort starten, sondern erst ...") ?>
             <input type="text" name="start_date" data-datetime-picker onChange="if (this.value) { jQuery('#whenitsdone').show('fade'); } else { jQuery('#whenitsdone').hide('fade'); }">
