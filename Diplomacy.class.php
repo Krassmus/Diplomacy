@@ -40,7 +40,7 @@ class Diplomacy extends StudIPPlugin implements StandardPlugin {
             $icon_navigation->setImage(Icon::create($this->getPluginURL()."/assets/diplomacy_red.svg"), array('title' => _("Neue Runde in Diplomacy!")));
             $icon_navigation->setTitle(_("Neue Runde in Diplomacy!"));
         } else {
-            $icon_navigation->setImage(Icon::create($this->getPluginURL()."/assets/diplomacy_grey.svg"), array('title' => _("Diplomacy")));
+            $icon_navigation->setImage(Icon::create($this->getPluginURL()."/assets/diplomacy_blue.svg"), array('title' => _("Diplomacy")));
         }
         return $icon_navigation;
     }
