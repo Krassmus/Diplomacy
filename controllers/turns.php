@@ -13,6 +13,11 @@ class TurnsController extends PluginController
     public function overview_action()
     {
         Navigation::activateItem('/course/diplomacy/overview');
+        $this->game = DiplomacyGame::find(Context::get()->id);
+        if (!$this->game) {
+            $this->redirect('game/initialize');
+        }
+
         //instead of a cronjob:
         $scheduled_turn = DiplomacyFutureTurn::findOneBySQL("
             start_time <= UNIX_TIMESTAMP()
@@ -101,7 +106,7 @@ class TurnsController extends PluginController
             $this->turn['name'] = Request::get("name");
             $this->turn['description'] = Request::get("description");
             $success = $this->turn->store();
-            if (count($_FILES)) {
+            if (count($_FILES) && $_FILES['map']['size'] > 0) {
                 $folder_id = md5("DIPLOMACY_MAP_FOLDER_".Context::get()->id);
                 $folder = Folder::find($folder_id);
                 if (!$folder) {

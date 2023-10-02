@@ -40,7 +40,7 @@ $label = $turn->isNew() ? _("Name der neuen Spielrunde") : _("Name der Spielrund
 
 
         <div>
-            <label style="display: none;" id="whenitsdone">
+            <label id="whenitsdone">
                 <input type="checkbox" name="whenitsdone" value="1" checked>
                 <?= _("Runde fängt automatisch früher an, wenn alle Spieler bestätigen, dass sie fertig sind.") ?>
             </label>

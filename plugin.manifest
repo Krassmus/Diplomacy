@@ -1,7 +1,7 @@
 pluginname=Diplomacy
 pluginclassname=Diplomacy
-version=1.1.2
-studipMinVersion=4.4
+version=2.0
+studipMinVersion=5.0
 origin=RasmusFuhse
 summary=Strategiespiel für Stud.IP
 description=Spielen Sie mit den anderen Teilnehmern der Veranstaltung Diplomacy, den Brettspielklassiker, online. Diplomacy ist ein Strategiespiel mit der Besonderheit, dass alle Spieler gleichzeitig Befehle ihrer Einheiten aufschreiben und gleichzeitig aufdecken. Erst dann wird geschaut, welche Befehle sich gegenseitig blockieren und welche durchkommen. Erst das Zusammenspiel der Befehle aller Spieler ergibt den nächsten Zug. Zufall kommt in diesem Spiel nicht vor, wodurch die diplomatischen Absprachen zwischen den Spielern an Gewicht gewinnen. Dieses Modul ermöglicht es Ihnen, eine Diplomacy-Gruppe zu leiten und trotzdem mitzuspielen, da auch der Leiter der Veranstaltung die Befehle der anderen Spieler erst sehen kann, wenn die neue Runde eingeleitet worden ist. Dieses Modul dient nur der Befehlsabgabe und der Protokollierung der Karte. Man kann damit jede Diplomacy-Karte und jede Regelvariante spielen.

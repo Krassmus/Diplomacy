@@ -1,9 +1,5 @@
 <?php
 
-require_once dirname(__file__)."/DiplomacyCommand.class.php";
-require_once dirname(__file__)."/DiplomacyGroup.class.php";
-require_once 'lib/models/PersonalNotifications.class.php';
-
 class DiplomacyTurn extends SimpleORMap {
 
     static protected function configure($config = array())
@@ -12,6 +8,10 @@ class DiplomacyTurn extends SimpleORMap {
         $config['belongs_to']['course'] = array(
             'class_name' => 'Course',
             'foreign_key' => 'Seminar_id'
+        );
+        $config['belongs_to']['game'] = array(
+            'class_name' => DiplomacyGame::class,
+            'foreign_key' => 'course_id'
         );
         $config['has_one']['map'] = array(
             'class_name' => FileRef::class,

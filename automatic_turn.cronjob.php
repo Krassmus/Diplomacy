@@ -19,8 +19,8 @@ class AutomaticTurnJob extends CronJob
     }
 
     public function setUp() {
-        require_once __DIR__.'/classes/DiplomacyFutureTurn.class.php';
-        require_once __DIR__.'/classes/DiplomacyTurn.class.php';
+        require_once __DIR__ . '/lib/DiplomacyFutureTurn.class.php';
+        require_once __DIR__ . '/lib/DiplomacyTurn.class.php';
     }
 
     /**

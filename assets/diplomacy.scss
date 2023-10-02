@@ -1,0 +1,22 @@
+ul.diplomacymaps {
+    display: flex;
+    > li {
+        border: 1px solid var(--content-color-20);
+        margin-left: 10px;
+        margin-bottom: 10px;
+        > a, button {
+            display: block;
+            width: 270px;
+            padding: 10px;
+            min-height: 100px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+
+            h3 {
+                margin-top: 0px;
+                color: var(--base-color);
+            }
+        }
+    }
+}
